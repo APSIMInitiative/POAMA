@@ -13,6 +13,7 @@ namespace POAMA.Service
     using System;
     using APSIM.Shared.Utilities;
     using System.Collections.Generic;
+    using System.ServiceModel.Web;
 
     public class Forecast : IForecast
     {
@@ -33,12 +34,12 @@ namespace POAMA.Service
             POAMAforecast.Class1 forecast = new POAMAforecast.Class1();
 
             MWArray metFile = new MWCharArray(siloFileName);
-            MWArray startMonth = new MWNumericArray(Convert.ToDouble(nowDate.Month));
-            MWArray startDay = new MWNumericArray(Convert.ToDouble(nowDate.Day));
             MWArray rainOnly = new MWNumericArray((double)1.0);
             MWArray writeFiles = new MWNumericArray((double)1.0);
-            MWArray lastYearOnly = new MWNumericArray((double)1.0);
-            forecast.calsite(metFile, startMonth, startDay, rainOnly, writeFiles, lastYearOnly);
+            MWArray startDay = new MWNumericArray(Convert.ToDouble(nowDate.Day));
+            MWArray startMonth = new MWNumericArray(Convert.ToDouble(nowDate.Month));
+            MWArray startYear = new MWNumericArray(Convert.ToDouble(nowDate.Year));
+            forecast.calsite(metFile, rainOnly, writeFiles, startDay, startMonth, startYear);
 
             string forecastFileName = siloFileName.Replace(".sim", "") + "_" + DateTime.Today.Year + ".sim";
             if (File.Exists(forecastFileName))
@@ -65,6 +66,49 @@ namespace POAMA.Service
         /// <summary>Get a rainfall forecast for the specified station number.</summary>
         /// <param name="stationNumber">The SILO station number.</param>
         /// <returns>A datatable with date and rain as columns.</returns>
+        public Stream GetRainfallForecastFile(int stationNumber, DateTime nowDate, bool rainOnly)
+        {
+            // Get SILO data and write to a temporary file.
+            DateTime startDate = new DateTime(1980, 1, 1);
+            MemoryStream dataStream = WeatherFile.ExtractMetStreamFromSILO(stationNumber, startDate, nowDate);
+            string siloFileName = Path.ChangeExtension(Path.GetTempFileName(), ".sim");
+            File.WriteAllBytes(siloFileName, dataStream.GetBuffer());
+
+            using (StreamWriter writer = new StreamWriter(@"D:\Websites\Test.txt"))
+            {
+                ChangeToWorkingDirectory();
+
+                // Run the MatLab script over the temporary SILO file.           
+                POAMAforecast.Class1 forecast = new POAMAforecast.Class1();
+
+                MWArray metFile = new MWCharArray(siloFileName);
+                MWArray rainfallOnly = new MWNumericArray((double)1);
+                if (!rainOnly)
+                    rainfallOnly = new MWNumericArray((double)0);
+                MWArray writeFiles = new MWNumericArray((double)1.0);
+                MWArray startDay = new MWNumericArray(Convert.ToDouble(nowDate.Day));
+                MWArray startMonth = new MWNumericArray(Convert.ToDouble(nowDate.Month));
+                MWArray startYear = new MWNumericArray(Convert.ToDouble(nowDate.Year));
+                forecast.calsite(metFile, rainfallOnly, writeFiles, startDay, startMonth, startYear);
+
+                string forecastFileName = siloFileName.Replace(".sim", "") + "_" + nowDate.Year + ".sim";
+
+                WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
+                if (File.Exists(forecastFileName))
+                {
+                    // Read in the forecast data.
+                    byte[] bytes = File.ReadAllBytes(forecastFileName);
+                    return new MemoryStream(bytes);
+                }
+                else
+                    return null;
+            }
+
+        }
+
+        /// <summary>Get a rainfall forecast for the specified station number.</summary>
+        /// <param name="stationNumber">The SILO station number.</param>
+        /// <returns>A datatable with date and rain as columns.</returns>
         public int Test(int stationNumber)
         {
             return stationNumber;
@@ -81,12 +125,8 @@ namespace POAMA.Service
         /// <summary>Change to current working directory to the NetCDF directory.</summary>
         private static void ChangeToWorkingDirectory()
         {
-            // Working directory will be our bin directory + 'Working'
-            string workingDirectory = @"C:\inetpub\wwwroot\Services\bin\NetCDF";
-            if (Directory.Exists(workingDirectory))
-                Directory.SetCurrentDirectory(workingDirectory);  // On Bob.
-            else
-                Directory.SetCurrentDirectory(@"G:\");            // testing folder on Deans computer.
+            string workingDirectory = @"D:\Websites\POAMA.Service\Data";
+            Directory.SetCurrentDirectory(workingDirectory);
         }
 
         /// <summary>Remove a column from the datatable if it exists.</summary>

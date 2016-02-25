@@ -27,37 +27,19 @@ namespace test2
                 string siloFileName = Path.ChangeExtension(Path.GetTempFileName(), ".sim");
                 File.WriteAllBytes(siloFileName, dataStream.GetBuffer());
 
+                DateTime nowDate = new DateTime(2015, 6, 1);
                 ChangeToWorkingDirectory();
 
                 // Run the MatLab script over the temporary SILO file.           
                 POAMAforecast.Class1 forecast = new POAMAforecast.Class1();
 
                 MWArray metFile = new MWCharArray(siloFileName);
-                MWArray startMonth = new MWNumericArray(Convert.ToDouble(DateTime.Today.Month));
-                MWArray startDay = new MWNumericArray(Convert.ToDouble(DateTime.Today.Day));
                 MWArray rainOnly = new MWNumericArray((double)1.0);
                 MWArray writeFiles = new MWNumericArray((double)1.0);
-                MWArray lastYearOnly = new MWNumericArray((double)1.0);
-                MWArray[] returnData = forecast.calsite(5, metFile, startMonth, startDay, rainOnly, writeFiles, lastYearOnly);
-
-
-
-                string forecastFileName = siloFileName.Replace(".sim", "") + "_" + DateTime.Today.Year + ".sim";
-                if (File.Exists(forecastFileName))
-                {
-                    // Read in the forecast data.
-                    ApsimTextFile f = new ApsimTextFile();
-                    f.Open(forecastFileName);
-                    DataTable data = f.ToTable();
-
-                    // Add a date column and remove unwanted columns
-                    AddDateColumn(data);
-                    RemoveColumn(data, "year");
-                    RemoveColumn(data, "day");
-                    RemoveColumn(data, "radn");
-                    RemoveColumn(data, "maxt");
-                    RemoveColumn(data, "mint");
-                }
+                MWArray startDay = new MWNumericArray(Convert.ToDouble(nowDate.Day));
+                MWArray startMonth = new MWNumericArray(Convert.ToDouble(nowDate.Month));
+                MWArray startYear = new MWNumericArray(Convert.ToDouble(nowDate.Year));
+                forecast.calsite(metFile, rainOnly, writeFiles, startDay, startMonth, startYear);
             }
         }
 
@@ -72,12 +54,8 @@ namespace test2
         /// <summary>Change to current working directory to the NetCDF directory.</summary>
         private static void ChangeToWorkingDirectory()
         {
-            // Working directory will be our bin directory + 'Working'
-            string workingDirectory = @"C:\inetpub\wwwroot\Services\bin\NetCDF";
-            if (Directory.Exists(workingDirectory))
-                Directory.SetCurrentDirectory(workingDirectory);  // On Bob.
-            else
-                Directory.SetCurrentDirectory(@"G:\");            // testing folder on Deans computer.
+            string workingDirectory = @"D:\Websites\POAMA.Service\Data";
+            Directory.SetCurrentDirectory(workingDirectory);
         }
 
         /// <summary>Remove a column from the datatable if it exists.</summary>
