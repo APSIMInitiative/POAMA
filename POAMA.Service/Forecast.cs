@@ -41,7 +41,7 @@ namespace POAMA.Service
             MWArray startYear = new MWNumericArray(Convert.ToDouble(nowDate.Year));
             forecast.calsite(metFile, rainOnly, writeFiles, startDay, startMonth, startYear);
 
-            string forecastFileName = siloFileName.Replace(".sim", "") + "_" + DateTime.Today.Year + ".sim";
+            string forecastFileName = siloFileName.Replace(".sim", "") + "_" + nowDate.Year + ".sim";
             if (File.Exists(forecastFileName))
             {
                 // Read in the forecast data.

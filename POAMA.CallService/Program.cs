@@ -18,6 +18,8 @@ namespace test2
         {
             if (args.Length == 1 && args[0] == "/Update")
                 UpdatePOAMA();
+            else if (args.Length == 1 && args[0] == "/CallWebService")
+                CallWebService();
             else
             {
                 // Get SILO data and write to a temporary file.
@@ -41,6 +43,13 @@ namespace test2
                 MWArray startYear = new MWNumericArray(Convert.ToDouble(nowDate.Year));
                 forecast.calsite(metFile, rainOnly, writeFiles, startDay, startMonth, startYear);
             }
+        }
+
+        /// <summary>Call web service directly.</summary>
+        private static void CallWebService()
+        {
+            POAMA.CallService.POAMAWebService.ForecastClient client = new POAMA.CallService.POAMAWebService.ForecastClient();
+            DataTable data = client.GetRainfallForecast(91009, DateTime.Now);
         }
 
         /// <summary>Update POAMA</summary>
