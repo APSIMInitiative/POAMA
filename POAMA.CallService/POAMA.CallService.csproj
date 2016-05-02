@@ -88,7 +88,7 @@
   <ItemGroup>
     <Reference Include="MWArray, Version=2.15.0.0, Culture=neutral, PublicKeyToken=e1d84a0da19db86f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\MATLAB\MATLAB Runtime\v85\toolbox\dotnetbuilder\bin\win64\v2.0\MWArray.dll</HintPath>
+      <HintPath>..\POAMA.Service\MWArray.dll</HintPath>
     </Reference>
     <Reference Include="POAMAforecast">
       <HintPath>..\POAMA.Service\POAMAforecast.dll</HintPath>
