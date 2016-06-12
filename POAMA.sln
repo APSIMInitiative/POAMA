@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APSIM.Cloud.Shared", "..\APSIM.Cloud\APSIM.Cloud.Shared\APSIM.Cloud.Shared.csproj", "{38151154-60D4-47BD-BCC2-679BA8BF144E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APSIM.Shared", "..\APSIM.Shared\APSIM.Shared.csproj", "{E243AE8D-35E3-4397-B180-EF1E8A91AE8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POAMA.Service", "POAMA.Service\POAMA.Service.csproj", "{6DF6552F-D028-4E7D-B221-5D01DBC4A0EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POAMA.CallService", "POAMA.CallService\POAMA.CallService.csproj", "{2858BEF1-B691-4D75-97D8-C72DF7CBDC31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POAMA.Portal", "POAMA.Portal\POAMA.Portal.csproj", "{7CDA3FD7-EC5D-4FA9-94B7-DC22ED96E0CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{E243AE8D-35E3-4397-B180-EF1E8A91AE8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E243AE8D-35E3-4397-B180-EF1E8A91AE8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E243AE8D-35E3-4397-B180-EF1E8A91AE8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DF6552F-D028-4E7D-B221-5D01DBC4A0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DF6552F-D028-4E7D-B221-5D01DBC4A0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DF6552F-D028-4E7D-B221-5D01DBC4A0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DF6552F-D028-4E7D-B221-5D01DBC4A0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2858BEF1-B691-4D75-97D8-C72DF7CBDC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2858BEF1-B691-4D75-97D8-C72DF7CBDC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2858BEF1-B691-4D75-97D8-C72DF7CBDC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2858BEF1-B691-4D75-97D8-C72DF7CBDC31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CDA3FD7-EC5D-4FA9-94B7-DC22ED96E0CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CDA3FD7-EC5D-4FA9-94B7-DC22ED96E0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CDA3FD7-EC5D-4FA9-94B7-DC22ED96E0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CDA3FD7-EC5D-4FA9-94B7-DC22ED96E0CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
