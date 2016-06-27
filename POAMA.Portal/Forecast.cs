@@ -41,8 +41,8 @@ namespace POAMA.Service
         public Stream Get(int stationNumber, DateTime nowDate, bool rainOnly)
         {
             // Get SILO data and write to a temporary file.
-            DateTime startDate = new DateTime(1981, 1, 1);
-            MemoryStream dataStream = WeatherFile.ExtractMetStreamFromSILO(stationNumber, startDate, nowDate);
+            DateTime startDate = new DateTime(1981, 1, 1);           
+            MemoryStream dataStream = WeatherFile.ExtractMetStreamFromSILO(stationNumber, startDate, DateTime.Now);
             string siloFileName = GetTemporaryFileName();
             string forecastFileName = null;
 

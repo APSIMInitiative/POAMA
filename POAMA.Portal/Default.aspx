@@ -13,6 +13,7 @@
           background-color:rgba(77,65,69,.2);
           line-height: 1.5;
           font-family: 'Open Sans', arial;
+          margin-bottom: 200px;
         }  
 
         img {
@@ -70,7 +71,7 @@
         }
 
         input[type="submit"] {
-            margin-bottom: 52px;
+            margin-bottom: 16px;
         }
 
         footer {
@@ -226,6 +227,7 @@
                         style="font-size:16pt;"
                         Text="Agree and generate data" />
         </p>
+        <p><small>This work has been made possible through R&D investment support by GRDC and CSIRO.</small></p>
     </div>
     </form>
 
@@ -233,7 +235,7 @@
 
         <ul><li>&copy; CSIRO and GRDC 2016</li><li><a href="http://www.csiro.au/en/About/Footer/Legal-notice"> Legal notice and disclaimer</a></li><li><a href="http://www.csiro.au/en/About/Access-to-information/Privacy"> Your privacy</a></li><li><a href="http://www.csiro.au/en/About/Footer/Accessibility"> Accessibility</a></li><li><a href="http://www.csiro.au/en/Contact"> Contact us</a></li></ul>
         <div class="footer__logos">
-            <img src="grdc--gov_inverted.png" alt="Grains research and development corporation" width="220px" />
+            <img src="GRDCLogoStacked_CMYK_transparent.png" alt="Grains research and development corporation" width="220px" />
             <img src="csiro-logo--white.png" alt="CSIRO logo" width="110px" />
         </div>
     </footer>
