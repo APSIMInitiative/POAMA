@@ -226,8 +226,14 @@
                         onclick="OnGenerateClick" 
                         style="font-size:16pt;"
                         Text="Agree and generate data" />
+            <asp:Button ID="downloadReportButton" 
+                        runat ="server" 
+                        onclick="OnDownloadReportClick" 
+                        style="font-size:16pt;"
+                        Text="Download report" CausesValidation="False" />
         </p>
         <p><small>This work has been made possible through R&D investment support by GRDC and CSIRO.</small></p>
+        <p><small>Uncalibrated POAMA model output has been provided by the Australian Bureau of Meteorology.</small></p>
     </div>
     </form>
 

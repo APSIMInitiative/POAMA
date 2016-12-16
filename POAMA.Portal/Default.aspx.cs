@@ -79,5 +79,11 @@ namespace POAMA.Portal
         {
             args.IsValid = password.Text.Equals("ResearchOnly", StringComparison.CurrentCultureIgnoreCase);
         }
+
+        /// <summary>The generate button has been clicked.</summary>
+        protected void OnDownloadReportClick(object sender, EventArgs e)
+        {
+            Response.Redirect("http://www.marine.csiro.au/~mcintosh/POAMA_biascal.pdf");
+        }
     }
 }
