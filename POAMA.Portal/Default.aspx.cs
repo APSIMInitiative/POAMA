@@ -83,7 +83,7 @@ namespace POAMA.Portal
         /// <summary>The generate button has been clicked.</summary>
         protected void OnDownloadReportClick(object sender, EventArgs e)
         {
-            Response.Redirect("http://www.marine.csiro.au/~mcintosh/POAMA_biascal.pdf");
+            Response.Redirect("https://publications.csiro.au/rpr/download?pid=csiro:EP17424&dsid=DS3");
         }
     }
 }

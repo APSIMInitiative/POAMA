@@ -23,7 +23,7 @@ namespace POAMA.Service
         /// <returns>A datatable with date and rain as columns.</returns>
         public DataTable GetDataTable(int stationNumber, DateTime nowDate, bool rainOnly)
         {
-            Stream inStream = Get(stationNumber, nowDate, rainOnly);
+            Stream inStream = Get(stationNumber, nowDate, rainOnly, false);
             if (inStream != null)
             {
                 // Read in the forecast data.
@@ -32,7 +32,7 @@ namespace POAMA.Service
                 return f.ToTable();
             }
             else
-                return null;
+                return new DataTable("NoData");
         }
 
         /// <summary>Get a rainfall forecast for the specified station number.</summary>
@@ -40,9 +40,17 @@ namespace POAMA.Service
         /// <returns>Stream of data.</returns>
         public Stream Get(int stationNumber, DateTime nowDate, bool rainOnly)
         {
+            return Get(stationNumber, nowDate, rainOnly, true);
+        }
+
+        /// <summary>Get a rainfall forecast for the specified station number.</summary>
+        /// <param name="stationNumber">The SILO station number.</param>
+        /// <returns>Stream of data.</returns>
+        private Stream Get(int stationNumber, DateTime nowDate, bool rainOnly, bool asPlainText)
+        {
             // Get SILO data and write to a temporary file.
             DateTime startDate = new DateTime(1981, 1, 1);           
-            MemoryStream dataStream = WeatherFile.ExtractMetStreamFromSILO(stationNumber, startDate, DateTime.Now);
+            MemoryStream dataStream = Weather.ExtractMetStreamFromSILO(stationNumber, startDate, DateTime.Now);
             string siloFileName = GetTemporaryFileName();
             string forecastFileName = null;
 
@@ -70,7 +78,7 @@ namespace POAMA.Service
                 // Get rid of temporary file.
                 File.Delete(siloFileName);
 
-                if (WebOperationContext.Current != null && WebOperationContext.Current.OutgoingRequest != null)
+                if (asPlainText && WebOperationContext.Current != null && WebOperationContext.Current.OutgoingRequest != null)
                     WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
                 if (File.Exists(forecastFileName))
                 {
@@ -134,7 +142,5 @@ namespace POAMA.Service
             DataTableUtilities.AddColumnOfObjects(data, "Date", dates.ToArray());
             data.Columns["Date"].SetOrdinal(0);
         }
-
-
     }
 }

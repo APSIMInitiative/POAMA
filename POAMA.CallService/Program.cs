@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 
 namespace POAMA.CallService
@@ -9,14 +10,15 @@ namespace POAMA.CallService
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            DataTable data;
             POAMA.Service.Forecast forecast = new POAMA.Service.Forecast();
             if (args.Length == 1 && args[0] == "/Update")
                 forecast.Update();
             else
             {
-                Stream data = forecast.Get(91009, DateTime.Today, true);
-                StreamReader reader = new StreamReader(data);
-                Console.Write(reader.ReadToEnd());
+                ServiceReference1.ForecastClient forecastClient = new ServiceReference1.ForecastClient();
+                data = forecastClient.GetDataTable(41023, new DateTime(2016, 08, 03), true);
+                Console.WriteLine(data.TableName.ToString());
             }
         }
     }
